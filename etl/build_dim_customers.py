@@ -70,7 +70,6 @@ def load(df: pd.DataFrame):
     """
     print("Final dim_customers row count:", len(df))
     print(df.head())
-    print("Unique customer_unique_id:", df["customer_unique_id"].nunique())
 
 
 

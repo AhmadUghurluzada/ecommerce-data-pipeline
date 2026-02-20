@@ -44,10 +44,11 @@ def transform_products(products: pd.DataFrame) -> pd.DataFrame:
 
 def load_products(df: pd.DataFrame):
     """
-    wjoerturjeokwap[lwekordjfg]
+    Save dim_products to processed folder.
     """
-    print("Final dim_products row count:", len(df))
-    print(df.head())
+    df.to_csv("data/processed/dim_products.csv", index=False)
+    print("dim_products saved.")
+
 
 
 

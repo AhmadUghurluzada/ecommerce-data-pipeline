@@ -39,12 +39,14 @@ def transform_dates(orders: pd.DataFrame) -> pd.DataFrame:
 
     return dim_time
 
+
 def load_dates(df: pd.DataFrame):
     """
-    Placeholder load function.
+    Save dim_time to processed folder.
     """
-    print("Final dim_time row count:", len(df))
-    print(df.head())
+    df.to_csv("data/processed/dim_time.csv", index=False)
+    print("dim_time saved.")
+
 
 
 

@@ -45,9 +45,15 @@ def transform_customers(customers: pd.DataFrame, orders: pd.DataFrame) -> pd.Dat
     # Keep most recent address per real customer
     df = df.drop_duplicates(subset="customer_unique_id", keep="first")
 
+    # Reset index and create surrogate key
+    df = df.reset_index(drop=True)
+    df["customer_key"] = df.index + 1
+
     # Select dimension columns
     df = df[
         [
+            "customer_key",
+            "customer_id",
             "customer_unique_id",
             "customer_city",
             "customer_state",
@@ -55,25 +61,20 @@ def transform_customers(customers: pd.DataFrame, orders: pd.DataFrame) -> pd.Dat
         ]
     ]
 
-    # Reset index and create surrogate key
-    df = df.reset_index(drop=True)
-    df["customer_id"] = df.index + 1
-
     return df
 
 
-def load(df: pd.DataFrame):
+def load_customers(df: pd.DataFrame):
     """
-    Placeholder load function.
-    For now, we just display summary.
-    Later, this will insert into PostgreSQL.
+    Save dim_customers to processed folder.
     """
-    print("Final dim_customers row count:", len(df))
-    print(df.head())
+    df.to_csv("data/processed/dim_customers.csv", index=False)
+    print("dim_customers saved.")
+
 
 
 
 if __name__ == "__main__":
     customers_raw, orders_row = extract_customers()
     dim_customers = transform_customers(customers_raw, orders_row)
-    load(dim_customers)
+    load_customers(dim_customers)

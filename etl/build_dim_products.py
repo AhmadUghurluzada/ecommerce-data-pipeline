@@ -10,7 +10,7 @@ def extract_products():
 
 def transform_products(products: pd.DataFrame) -> pd.DataFrame:
     """
-    Transforms raw products data into dim_poducts dimension table.
+    Transforms raw products data into dim_products dimension table.
      - Remove rows with missing numeric measurements (weight, length, height, width).
      - Keep descriptive NULLs 
      - Generate surrogate key.
@@ -29,9 +29,9 @@ def transform_products(products: pd.DataFrame) -> pd.DataFrame:
             "product_key", 
             "product_id", 
             "product_category_name", 
-            "product_name_lenght", 
-            "product_description_lenght", 
-             "product_photos_qty", 
+            "product_name_length", 
+            "product_description_length", 
+            "product_photos_qty", 
             "product_weight_g",
             "product_length_cm", 
             "product_height_cm", 

@@ -84,5 +84,5 @@ if __name__ == "__main__":
     order_items, orders, customers, products, sellers, time = extract()
     fact_order_items = transform(order_items, orders, customers, products, sellers, time)
     load(fact_order_items)
-    # Basic sanity checks
+    # check for missing order_item_id
     assert fact_order_items["order_item_id"].notna().all()

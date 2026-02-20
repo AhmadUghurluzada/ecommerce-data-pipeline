@@ -25,13 +25,13 @@ def transform(orders, payments, reviews, customers, time):
     payments_agg = payments.groupby("order_id", as_index=False).agg(total_payment=("payment_value", "sum"))
 
     # Reviews (only score)
-    reviews = reviews[["order_id", "review_score"]]
+    reviews_agg = (reviews.groupby("order_id", as_index=False).agg(review_score=("review_score", "mean")))
 
     # Merge orders with payments
     fact = orders.merge(payments_agg, on="order_id", how="left")
 
     # Merge with reviews
-    fact = fact.merge(reviews, on="order_id", how="left")
+    fact = fact.merge(reviews_agg, on="order_id", how="left")
 
     # Merge with customers to get customer_key
     fact = fact.merge(
@@ -73,3 +73,5 @@ if __name__ == "__main__":
     orders, payments, reviews, customers, time = extract()
     fact_orders = transform(orders, payments, reviews, customers, time)
     load(fact_orders)
+    # Check for duplicates in order_id
+    assert fact_orders["order_id"].is_unique

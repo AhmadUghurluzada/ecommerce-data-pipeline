@@ -74,7 +74,9 @@ def load(df: pd.DataFrame):
     Loads fact_order_items to processed folder.
     """
     df.to_csv("data/processed/fact_order_items.csv", index=False)
-
+    print("fact_order_items saved.")
+    print("fact_order_items shape:", df.shape)
+    print(df.head())
 
 
 
@@ -82,3 +84,5 @@ if __name__ == "__main__":
     order_items, orders, customers, products, sellers, time = extract()
     fact_order_items = transform(order_items, orders, customers, products, sellers, time)
     load(fact_order_items)
+    # Basic sanity checks
+    assert fact_order_items["order_item_id"].notna().all()

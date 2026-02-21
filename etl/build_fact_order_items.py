@@ -49,8 +49,17 @@ def transform(order_items, orders, customers, products, sellers, time):
         how="left"
     )
 
+    # Convert foreign keys to Int64 to allow for nullable integers
+    fact["product_key"] = fact["product_key"].astype("Int64")
+    fact["customer_key"] = fact["customer_key"].astype("Int64")
+    fact["seller_key"] = fact["seller_key"].astype("Int64")
+
+
     # Create date_key from order_purchase_timestamp
     fact["date_key"] = fact["order_purchase_timestamp"].dt.strftime("%Y%m%d").astype(int)
+
+    # Remove rows with missing foreign keys (customer_key, product_key, seller_key)
+    fact = fact.dropna(subset=["customer_key","product_key","seller_key"])
 
     # Select final columns
     fact = fact[
@@ -75,8 +84,6 @@ def load(df: pd.DataFrame):
     """
     df.to_csv("data/processed/fact_order_items.csv", index=False)
     print("fact_order_items saved.")
-    print("fact_order_items shape:", df.shape)
-    print(df.head())
 
 
 

@@ -36,15 +36,6 @@ def transform_customers(customers: pd.DataFrame, orders: pd.DataFrame) -> pd.Dat
     # Convert to datetime
     df["order_purchase_timestamp"] = pd.to_datetime(df["order_purchase_timestamp"])
 
-    # Sort by latest purchase per real customer
-    df = df.sort_values(
-        ["customer_unique_id", "order_purchase_timestamp"],
-        ascending=[True, False]
-    )
-
-    # Keep most recent address per real customer
-    df = df.drop_duplicates(subset="customer_unique_id", keep="first")
-
     # Reset index and create surrogate key
     df = df.reset_index(drop=True)
     df["customer_key"] = df.index + 1

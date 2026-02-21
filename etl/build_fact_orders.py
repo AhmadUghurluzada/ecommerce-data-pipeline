@@ -64,8 +64,6 @@ def load(df: pd.DataFrame):
     """
     df.to_csv("data/processed/fact_orders.csv", index=False)
     print("fact_orders saved.")
-    print("fact_orders shape:", df.shape)
-    print(df.head())
 
 
 
@@ -73,5 +71,6 @@ if __name__ == "__main__":
     orders, payments, reviews, customers, time = extract()
     fact_orders = transform(orders, payments, reviews, customers, time)
     load(fact_orders)
+    print(f"fact_orders shape: {fact_orders.shape}")
     # Check for duplicates in order_id
     assert fact_orders["order_id"].is_unique

@@ -33,4 +33,5 @@ def load_dimension(csv_path, table_name):
 
 
 if __name__ == "__main__":
-    load_dimension("data/processed/dim_time.csv", "dim_time")
+    load_dimension("data/processed/dim_customers.csv", "dim_customers")
+   

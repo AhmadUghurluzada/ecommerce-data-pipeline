@@ -72,5 +72,8 @@ if __name__ == "__main__":
     fact_orders = transform(orders, payments, reviews, customers, time)
     load(fact_orders)
     print(f"fact_orders shape: {fact_orders.shape}")
-    # Check for duplicates in order_id
+    # Check for uniqueness and non-null order_id
     assert fact_orders["order_id"].is_unique
+    assert fact_orders["order_id"].notna().all()
+    missing = fact_orders[fact_orders["customer_key"].isna()]
+    print(len(missing))

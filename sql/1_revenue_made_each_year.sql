@@ -1,10 +1,11 @@
--- 2. The most expensive 10 order
--- Which orders generated the highest total revenue?
+-- 1. Revenue made each year
+-- How much total revenue was generated each year?
 
-SELECT
-	order_id,
-	SUM(price) AS order_total
-FROM dw.fact_order_items
-GROUP BY order_id
-ORDER BY order_total DESC
-LIMIT 10;
+SELECT 
+	t.year, 
+	SUM(f.price) as total_revenue
+FROM dw.fact_order_items f
+JOIN dw.dim_time t
+	ON f.date_key = t.date_key
+GROUP BY t.year
+ORDER BY t.year;

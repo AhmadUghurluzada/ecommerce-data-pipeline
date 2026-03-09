@@ -12,7 +12,7 @@ engine = create_engine(
 
 def load_fact_orders_table():
     """
-    Load a fact table CSV into PostgreSQL.
+    Load fact_orders table CSV into PostgreSQL.
     - Drops rows with null dimension keys
     - Ensures integer surrogate keys
     """
@@ -41,14 +41,14 @@ def load_fact_orders_table():
 
 def load_fact_order_items_table():
     """
-    Load a fact table CSV into PostgreSQL.
+    Load fact_order_items table CSV into PostgreSQL.
     - Drops rows with null dimension keys
     - Ensures integer surrogate keys
     """
     fact = pd.read_csv("data/processed/fact_order_items.csv")
 
     # Drop rows with missing keys
-    fact = fact.dropna(subset=["customer_key", "date_key", "seller_key", "date_key"], how='any')
+    fact = fact.dropna(subset=["customer_key", "product_key", "seller_key", "date_key"], how='any')
 
     # Convert keys to integers
     for col in ["customer_key", "product_key", "seller_key", "date_key"]:
@@ -60,7 +60,7 @@ def load_fact_order_items_table():
         con=engine,
         schema="dw",
         if_exists="append",  # append to existing table
-        index=False      # faster inserts
+        index=False 
     )
 
     print(f"fact_order_items loaded. Rows: {fact.shape[0]}")
@@ -68,4 +68,5 @@ def load_fact_order_items_table():
 
 
 if __name__ == "__main__":
+    load_fact_orders_table()
     load_fact_order_items_table()

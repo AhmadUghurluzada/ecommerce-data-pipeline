@@ -18,4 +18,5 @@ SELECT
         2
     ) AS revenue_percentage
 FROM category_revenue
-ORDER BY revenue DESC;
+ORDER BY revenue DESC
+LIMIT 10;

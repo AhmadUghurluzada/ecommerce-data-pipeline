@@ -1,6 +1,28 @@
+# Python
 __pycache__/
 *.pyc
-.env
+*.pyo
+*.pyd
+
+# Virtual environments
+.vscode/
 venv/
+.venv/
+env/
+
+
+# Raw data
+data/raw/ 
+
+# OS files
 .DS_Store
 Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# PowerBI temporary files
+*.pbix~
+
+# Logs
+*.log
